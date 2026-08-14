@@ -1,0 +1,125 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f0e8;
+  font-family: 'Baloo 2', sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+.app {
+  width: 100%;
+  max-width: 720px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.letter-heading {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #3b6fd6;
+  margin-bottom: 1rem;
+}
+
+.panes {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pane {
+  position: relative;
+  width: 300px;
+  height: 340px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.letter-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.trace-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 340px;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.controls {
+  margin-top: 1.25rem;
+}
+
+.btn-clear {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: #e8601c;
+  border: none;
+  border-radius: 24px;
+  padding: 0.6rem 1.75rem;
+  cursor: pointer;
+}
+
+.btn-clear:hover { background: #c94f14; }
+
+.nav-row {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 640px;
+}
+
+.btn-nav {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #3b6fd6;
+  text-decoration: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.btn-nav:hover { background: #eef3ff; }
+
+.btn-nav-disabled {
+  color: #ccc;
+  background: transparent;
+  box-shadow: none;
+}
