@@ -11,8 +11,8 @@ class AlphabetTraceApp < HyperComponent
 
   render do
     index = LETTERS.index(letter) || 0
-    prev_letter = index > 0 ? LETTERS[index - 1] : nil
-    next_letter = index < LETTERS.length - 1 ? LETTERS[index + 1] : nil
+    prev_letter = LETTERS[(index - 1) % LETTERS.length]
+    next_letter = LETTERS[(index + 1) % LETTERS.length]
 
     DIV(class: "app") do
       DIV(class: "letter-heading") { "#{letter.upcase}#{letter}" }
@@ -44,17 +44,8 @@ class AlphabetTraceApp < HyperComponent
       end
 
       DIV(class: "nav-row") do
-        if prev_letter
-          A(href: "/#{prev_letter}", class: "btn-nav") { "< #{prev_letter.upcase}" }
-        else
-          SPAN(class: "btn-nav btn-nav-disabled") { "< " }
-        end
-
-        if next_letter
-          A(href: "/#{next_letter}", class: "btn-nav") { "#{next_letter.upcase} >" }
-        else
-          SPAN(class: "btn-nav btn-nav-disabled") { " >" }
-        end
+        A(href: "/#{prev_letter}", class: "btn-nav") { "< #{prev_letter.upcase}" }
+        A(href: "/#{next_letter}", class: "btn-nav") { "#{next_letter.upcase} >" }
       end
     end
   end

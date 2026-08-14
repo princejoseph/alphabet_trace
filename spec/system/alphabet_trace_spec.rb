@@ -54,17 +54,17 @@ RSpec.describe "Tracing a letter", js: true do
     expect(page).to have_current_path("/a")
   end
 
-  it "disables the previous link on the first letter" do
+  it "wraps from the first letter back to the last letter" do
     visit "/a"
 
-    expect(page).to have_no_link("< ")
-    expect(page).to have_link("B >")
+    click_link "< Z"
+    expect(page).to have_current_path("/z")
   end
 
-  it "disables the next link on the last letter" do
+  it "wraps from the last letter back to the first letter" do
     visit "/z"
 
-    expect(page).to have_link("< Y")
-    expect(page).to have_no_link(" >")
+    click_link "A >"
+    expect(page).to have_current_path("/a")
   end
 end

@@ -139,9 +139,3 @@ body {
 }
 
 .btn-nav:hover { background: #eef3ff; }
-
-.btn-nav-disabled {
-  color: #ccc;
-  background: transparent;
-  box-shadow: none;
-}

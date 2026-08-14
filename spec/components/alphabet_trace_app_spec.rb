@@ -53,17 +53,15 @@ RSpec.describe "AlphabetTraceApp", js: true do
     expect(find_link("< L")[:href]).to end_with("/l")
   end
 
-  it "disables the previous link on the first letter" do
+  it "wraps to the last letter when previous is clicked on the first letter" do
     mount "AlphabetTraceApp", letter: "a"
 
-    expect(page).to have_no_link("< ")
-    expect(page).to have_link("B >")
+    expect(find_link("< Z")[:href]).to end_with("/z")
   end
 
-  it "disables the next link on the last letter" do
+  it "wraps to the first letter when next is clicked on the last letter" do
     mount "AlphabetTraceApp", letter: "z"
 
-    expect(page).to have_link("< Y")
-    expect(page).to have_no_link(" >")
+    expect(find_link("A >")[:href]).to end_with("/a")
   end
 end
