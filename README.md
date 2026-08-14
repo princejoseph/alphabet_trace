@@ -1,5 +1,8 @@
 # Alphabet Trace
 
+**Live at [alphabet.fly.dev](https://alphabet.fly.dev) — try it, or add it to
+your phone's home screen for an app-like experience.**
+
 A tiny app for kids to practice writing the alphabet. Each letter shows a
 solid reference glyph next to a dotted trace guide with a canvas overlay —
 draw over the dots with your mouse or finger, then move to the next letter.
@@ -7,13 +10,20 @@ draw over the dots with your mouse or finger, then move to the next letter.
 ## How it works
 
 - `/a` through `/z` each show one letter, with **Previous** / **Next** links
-  to move through the alphabet (disabled at the ends).
+  that cycle through the alphabet (next on `z` wraps to `a`, and vice versa —
+  no dead ends).
+- A word/picture card ("🍎 A is for Apple") sits above the tracing area for
+  every letter, for a little extra vocabulary reinforcement.
 - The left pane is a solid reference letter; the right pane is the same
   letter drawn as a dotted outline with a transparent `<canvas>` on top —
   trace over the dots to practice.
 - **Clear** wipes the canvas so a letter can be retried.
 - Letters are rendered as SVG text, not image files, so there are no
   per-letter assets to manage — the whole alphabet comes from one component.
+- Installable as a PWA (custom icon, manifest, service worker) and
+  responsive down to the narrowest phone screens — the canvas stays pixel-
+  accurate to the touch even when it's rendered smaller than its native
+  drawing resolution.
 
 ## Stack
 
@@ -57,7 +67,12 @@ bundle exec rspec
   **Add one of these for each new component** as the page grows — mount it,
   assert on it, done; no need to wire it into the real page first.
 
-Deploys are gated on this suite passing (see `.github/workflows/deploy.yml`).
+## Deployment
+
+Hosted on [Fly.io](https://fly.io) (app name `alphabet`, `fly.toml` in the
+repo root). `.github/workflows/deploy.yml` runs the full spec suite on every
+push to `main` and only deploys if it passes. `.github/workflows/ci.yml`
+separately runs rubocop and brakeman on every push and pull request.
 
 ## Project structure
 
