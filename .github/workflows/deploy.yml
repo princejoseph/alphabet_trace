@@ -5,8 +5,25 @@ on:
     branches: [ main ]
 
 jobs:
+  test:
+    name: Run specs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Run specs
+        run: bundle exec rspec
+
   deploy:
     name: Deploy to Fly.io
+    needs: test
     runs-on: ubuntu-latest
     concurrency: deploy-group
     steps:

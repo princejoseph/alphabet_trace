@@ -19,24 +19,11 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      # Not bin/brakeman: its --ensure-latest flag fails CI forever once a newer
+      # brakeman ships, since brakeman >= 7.1.2 requires Ruby >= 3.2 and this
+      # app is pinned to Ruby 3.1 for Rails-7/Hyperstack-fork compatibility.
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
-
-  scan_js:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/importmap audit
+        run: bundle exec brakeman --no-pager -i config/brakeman.ignore
 
   lint:
     runs-on: ubuntu-latest

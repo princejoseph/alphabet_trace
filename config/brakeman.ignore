@@ -1,0 +1,51 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "60eb6dfa36eaccbd862d2c7f1292aacf2ceee5d6d02338642c7ab755364499ac",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/hyperstack/components/alphabet_trace_app.rb",
+      "note": "False positive: app/hyperstack/components is Opal client-side source, compiled to JavaScript by Sprockets and run only in the browser. It is never loaded or executed as server-side Ruby, so %x{} here is Opal's raw-JavaScript-embedding syntax, not Ruby's Kernel#` shell-execution operator -- there is no server-side command to inject into."
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "7730caf3719bd7df2d4a13eb686e1b919fd8f10865bbee094878d9057db6d7f5",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/hyperstack/components/alphabet_trace_app.rb",
+      "note": "False positive: app/hyperstack/components is Opal client-side source, compiled to JavaScript by Sprockets and run only in the browser. It is never loaded or executed as server-side Ruby, so %x{} here is Opal's raw-JavaScript-embedding syntax, not Ruby's Kernel#` shell-execution operator -- there is no server-side command to inject into."
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "849451022ae637a3cb5e68d944df06da6bc59722000e1b12c048e890cd7b3f7e",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/hyperstack/components/alphabet_trace_app.rb",
+      "note": "False positive: app/hyperstack/components is Opal client-side source, compiled to JavaScript by Sprockets and run only in the browser. It is never loaded or executed as server-side Ruby, so %x{} here is Opal's raw-JavaScript-embedding syntax, not Ruby's Kernel#` shell-execution operator -- there is no server-side command to inject into."
+    },
+    {
+      "warning_type": "Unmaintained Dependency",
+      "warning_code": 121,
+      "fingerprint": "d84924377155b41e094acae7404ec2e521629d86f97b0ff628e3d1b263f8101c",
+      "check_name": "EOLRails",
+      "message": "Support for Rails 7.2.3.2 ended on 2026-08-09",
+      "file": "Gemfile.lock",
+      "note": "Accepted, not a bug: this app intentionally pins Rails 7.2 to match the princejoseph/hyperstack fork's rails-7-compatibility branch. Upgrading is tracked at the fork level, not per-app."
+    },
+    {
+      "warning_type": "Unmaintained Dependency",
+      "warning_code": 122,
+      "fingerprint": "edf687f759ec9765bd5db185dbc615c80af77d6e7e19386fc42934e7a80307af",
+      "check_name": "EOLRuby",
+      "message": "Support for Ruby 3.1.0 ended on 2025-03-31",
+      "file": ".ruby-version",
+      "note": "Accepted, not a bug: this app intentionally pins Ruby 3.1.0, which the princejoseph/hyperstack fork's Rails-7-compatibility work targets. Upgrading is tracked at the fork level, not per-app."
+    }
+  ],
+  "updated": "2026-08-14 03:20:00 -0700",
+  "brakeman_version": "7.1.1"
+}
