@@ -11,8 +11,8 @@ class AlphabetTraceApp < HyperComponent
 
   render do
     index = LETTERS.index(letter) || 0
-    prev_letter = LETTERS[(index - 1) % LETTERS.length]
-    next_letter = LETTERS[(index + 1) % LETTERS.length]
+    prev_letter = LETTERS[index - 1]
+    next_letter = LETTERS[index + 1] || LETTERS[0]
 
     DIV(class: "app") do
       DIV(class: "letter-heading") { "#{letter.upcase}#{letter}" }
