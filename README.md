@@ -7,6 +7,17 @@ A tiny app for kids to practice writing the alphabet. Each letter shows a
 solid reference glyph next to a dotted trace guide with a canvas overlay —
 draw over the dots with your mouse or finger, then move to the next letter.
 
+## Background
+
+This is a rebuild of a hackathon project. The original was a plain Rails app:
+a `/:alphabet` route read `params[:alphabet]`, rendered a per-letter image
+alongside a dotted-outline version of the same letter, and layered a
+`<canvas>` on top of the outline for the kid to trace on — with next/prev
+links generated from a `('a'..'z')` range. This version keeps that same core
+idea but replaces the per-letter image files with one Hyperstack component
+that renders every letter as SVG, and adds a real test suite, CI, and
+automatic deployment on top.
+
 ## How it works
 
 - `/a` through `/z` each show one letter, with **Previous** / **Next** links
