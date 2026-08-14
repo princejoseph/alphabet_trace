@@ -3,7 +3,7 @@
     {
       "warning_type": "Command Injection",
       "warning_code": 14,
-      "fingerprint": "60eb6dfa36eaccbd862d2c7f1292aacf2ceee5d6d02338642c7ab755364499ac",
+      "fingerprint": "70dac58499ca96a520b7a2310e72e1fe1e54dae2fc8e2c80d9955a2a104e53df",
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "app/hyperstack/components/alphabet_trace_app.rb",
@@ -46,6 +46,6 @@
       "note": "Accepted, not a bug: this app intentionally pins Ruby 3.1.0, which the princejoseph/hyperstack fork's Rails-7-compatibility work targets. Upgrading is tracked at the fork level, not per-app."
     }
   ],
-  "updated": "2026-08-14 03:20:00 -0700",
+  "updated": "2026-08-14 05:30:00 -0700",
   "brakeman_version": "7.1.1"
 }

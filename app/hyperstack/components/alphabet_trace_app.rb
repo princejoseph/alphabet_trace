@@ -7,6 +7,9 @@ class AlphabetTraceApp < HyperComponent
     @drawing = false
     @last_point = nil
     @canvas_node = nil
+
+    nav = Native(`navigator`)
+    nav.serviceWorker.register("/service-worker.js") if nav[:serviceWorker]
   end
 
   render do
@@ -84,6 +87,12 @@ class AlphabetTraceApp < HyperComponent
     raw_event = e.to_n
     %x{
       var rect = #{node}.getBoundingClientRect();
+      // The canvas's CSS display size can differ from its drawing-buffer
+      // size (width=300/height=340 attrs) on narrow screens where it's
+      // scaled down to fit -- map displayed-pixel coordinates back to
+      // buffer coordinates or strokes land in the wrong place.
+      var scaleX = #{node}.width / rect.width;
+      var scaleY = #{node}.height / rect.height;
       var clientX, clientY;
       if (#{raw_event}.touches && #{raw_event}.touches.length > 0) {
         clientX = #{raw_event}.touches[0].clientX;
@@ -92,7 +101,7 @@ class AlphabetTraceApp < HyperComponent
         clientX = #{raw_event}.clientX;
         clientY = #{raw_event}.clientY;
       }
-      return [clientX - rect.left, clientY - rect.top];
+      return [(clientX - rect.left) * scaleX, (clientY - rect.top) * scaleY];
     }
   end
 
