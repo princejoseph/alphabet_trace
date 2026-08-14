@@ -24,6 +24,28 @@ RSpec.describe "Tracing a letter", js: true do
       .perform
   end
 
+  # Roughly traces the "A" guide with three strokes (left leg, right leg,
+  # crossbar) so scoring specs have something legitimately letter-shaped to
+  # grade, rather than an arbitrary scribble.
+  LETTER_A_STROKES = [
+    [ [ 150, 60 ], [ 75, 320 ] ],
+    [ [ 150, 60 ], [ 225, 320 ] ],
+    [ [ 105, 220 ], [ 195, 220 ] ]
+  ].freeze
+
+  def trace_letter_a
+    canvas = find(".trace-canvas").native
+    LETTER_A_STROKES.each do |points|
+      action = page.driver.browser.action.move_to(canvas, points[0][0] - 150, points[0][1] - 170).click_and_hold
+      points.each_cons(2) { |(px, py), (x, y)| action = action.move_by(x - px, y - py) }
+      action.release.perform
+    end
+  end
+
+  def score_percentage
+    find(".score-result").text[/(\d+)%/, 1].to_i
+  end
+
   it "shows the reference letter, word/picture card, and a blank trace canvas" do
     visit "/a"
 
@@ -66,5 +88,31 @@ RSpec.describe "Tracing a letter", js: true do
 
     click_link "A >"
     expect(page).to have_current_path("/a")
+  end
+
+  it "shows an encouraging low score when checking an untouched canvas" do
+    visit "/a"
+
+    click_button "Check my tracing"
+    expect(page).to have_content("0% - Keep practicing!")
+  end
+
+  it "shows a high score after tracing the letter reasonably well" do
+    visit "/a"
+
+    trace_letter_a
+    click_button "Check my tracing"
+    expect(score_percentage).to be >= 50
+  end
+
+  it "hides the score after Clear is pressed" do
+    visit "/a"
+
+    trace_letter_a
+    click_button "Check my tracing"
+    expect(page).to have_css(".score-result")
+
+    click_button "Clear"
+    expect(page).to have_no_css(".score-result")
   end
 end

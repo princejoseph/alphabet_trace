@@ -4,6 +4,8 @@ class AlphabetTraceApp < HyperComponent
   LETTERS = ("a".."z").to_a
 
   before_mount do
+    @score = nil
+
     nav = Native(`navigator`)
     nav.serviceWorker.register("/service-worker.js") if nav[:serviceWorker]
   end
@@ -26,13 +28,16 @@ class AlphabetTraceApp < HyperComponent
         DIV(class: "pane trace-pane") do
           letter_svg(fill: "none", stroke: "#c7c7cf", stroke_width: 3,
                      stroke_dasharray: "1 15", stroke_linecap: "round")
-          TraceCanvas(ref: ->(instance) { @trace_canvas = instance })
+          TraceCanvas(letter: letter, ref: ->(instance) { @trace_canvas = instance })
         end
       end
 
       DIV(class: "controls") do
-        BUTTON(class: "btn-clear") { "Clear" }.on(:click) { @trace_canvas.clear_canvas }
+        BUTTON(class: "btn-clear") { "Clear" }.on(:click) { mutate @score = nil; @trace_canvas.clear_canvas }
+        BUTTON(class: "btn-check") { "Check my tracing" }.on(:click) { mutate @score = @trace_canvas.check_tracing }
       end
+
+      DIV(class: "score-result") { score_message(@score) } if @score
 
       DIV(class: "nav-row") do
         A(href: "/#{prev_letter}", class: "btn-nav") { "< #{prev_letter.upcase}" }
@@ -48,5 +53,17 @@ class AlphabetTraceApp < HyperComponent
            fill: fill, stroke: stroke, stroke_width: stroke_width,
            stroke_dasharray: stroke_dasharray, stroke_linecap: stroke_linecap) { letter.upcase }
     end
+  end
+
+  def score_message(score)
+    emoji, phrase =
+      if score >= 80
+        [ "🌟", "Amazing tracing!" ]
+      elsif score >= 50
+        [ "👍", "Nice try!" ]
+      else
+        [ "💪", "Keep practicing!" ]
+      end
+    "#{emoji} #{score}% - #{phrase}"
   end
 end

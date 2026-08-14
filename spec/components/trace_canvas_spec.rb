@@ -29,14 +29,14 @@ RSpec.describe "TraceCanvas", js: true do
   end
 
   it "renders a blank canvas" do
-    mount "TraceCanvas"
+    mount "TraceCanvas", letter: "a"
 
     expect(page).to have_css(".trace-canvas")
     expect(pixel_count).to eq(0)
   end
 
   it "draws a stroke when dragged across" do
-    mount "TraceCanvas"
+    mount "TraceCanvas", letter: "a"
 
     drag_across_canvas
     expect(pixel_count).to be > 0

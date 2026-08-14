@@ -1,4 +1,6 @@
 class TraceCanvas < HyperComponent
+  param :letter
+
   before_mount do
     @drawing = false
     @last_point = nil
@@ -22,6 +24,71 @@ class TraceCanvas < HyperComponent
     %x{
       var ctx = #{node}.getContext('2d');
       ctx.clearRect(0, 0, #{node}.width, #{node}.height);
+    }
+  end
+
+  # Renders the target letter's outline onto an offscreen canvas (same font/
+  # position as the visible dotted guide) and compares it against the ink on
+  # the real canvas. A blurred copy of each becomes a "tolerance zone" so
+  # kids aren't graded on pixel-perfect accuracy:
+  #  - coverage: how much of the letter's outline got traced over
+  #  - precision: how much of the drawn ink stayed close to the outline
+  # Returns a 0-100 score (average of the two), or 0 if nothing was drawn.
+  def check_tracing
+    node = @canvas_node
+    target_letter = letter.upcase
+    %x{
+      var canvasNode = #{node};
+      var targetLetter = #{target_letter};
+      var w = canvasNode.width, h = canvasNode.height;
+
+      function renderOutline(blurPx) {
+        var c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        var ctx = c.getContext('2d');
+        if (blurPx) ctx.filter = 'blur(' + blurPx + 'px)';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'alphabetic';
+        ctx.font = '700 280px "Baloo 2", sans-serif';
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#000';
+        ctx.strokeText(targetLetter, 150, 250);
+        return ctx.getImageData(0, 0, w, h).data;
+      }
+
+      function renderInk(blurPx) {
+        var c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        var ctx = c.getContext('2d');
+        if (blurPx) ctx.filter = 'blur(' + blurPx + 'px)';
+        ctx.drawImage(canvasNode, 0, 0);
+        return ctx.getImageData(0, 0, w, h).data;
+      }
+
+      var letterMask = renderOutline(0);
+      var letterTolerance = renderOutline(14);
+      var inkMask = renderInk(0);
+      var inkTolerance = renderInk(14);
+
+      var letterCount = 0, coveredCount = 0;
+      var inkCount = 0, precisionCount = 0;
+
+      for (var i = 3; i < letterMask.length; i += 4) {
+        if (letterMask[i] > 10) {
+          letterCount++;
+          if (inkTolerance[i] > 10) coveredCount++;
+        }
+        if (inkMask[i] > 10) {
+          inkCount++;
+          if (letterTolerance[i] > 10) precisionCount++;
+        }
+      }
+
+      if (inkCount === 0) return 0;
+
+      var coverage = letterCount > 0 ? coveredCount / letterCount : 0;
+      var precision = precisionCount / inkCount;
+      return Math.round(((coverage + precision) / 2) * 100);
     }
   end
 
