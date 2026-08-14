@@ -20,6 +20,12 @@ Capybara.register_driver :selenium_chrome_headless do |app|
   options.add_argument("--headless=new")
   options.add_argument("--disable-gpu")
   options.add_argument("--no-sandbox")
+  # Pinned explicitly: with no fixed size, Selenium's actions API (used for
+  # simulated drags) computes screen coordinates against whatever the
+  # environment's default window happens to be, which differs enough
+  # between machines/CI to throw MoveTargetOutOfBoundsError -- large enough
+  # here that the whole page fits without scrolling, in any environment.
+  options.add_argument("--window-size=1200,1400")
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
