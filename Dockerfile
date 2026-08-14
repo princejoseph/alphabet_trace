@@ -12,8 +12,15 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 WORKDIR /rails
 
 # Install base packages
+# git must be present at container boot, not just at build time: the
+# Hyperstack fork gems (hyper-component, hyper-model, etc.) are git-sourced,
+# and Bundler::Source::Git#load_gemspec re-derives each gem's spec from the
+# checked-out .git dir on every `bundler/setup` (i.e. every boot, not just
+# `bundle install`). Without git + the gem's .git dir intact, boot crashes
+# with "Invalid gemspec ...: No such file or directory - git" before Rails
+# even loads.
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
+    apt-get install --no-install-recommends -y curl git libjemalloc2 libvips sqlite3 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
@@ -33,7 +40,7 @@ RUN apt-get update -qq && \
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache && \
     bundle exec bootsnap precompile --gemfile
 
 # Copy application code
