@@ -3,28 +3,28 @@
     {
       "warning_type": "Command Injection",
       "warning_code": 14,
-      "fingerprint": "70dac58499ca96a520b7a2310e72e1fe1e54dae2fc8e2c80d9955a2a104e53df",
+      "fingerprint": "5951532059392d5c55d6fa9c4afcc14282eb4e1337a6d25aaea7615d758953d0",
       "check_name": "Execute",
       "message": "Possible command injection",
-      "file": "app/hyperstack/components/alphabet_trace_app.rb",
+      "file": "app/hyperstack/components/trace_canvas.rb",
       "note": "False positive: app/hyperstack/components is Opal client-side source, compiled to JavaScript by Sprockets and run only in the browser. It is never loaded or executed as server-side Ruby, so %x{} here is Opal's raw-JavaScript-embedding syntax, not Ruby's Kernel#` shell-execution operator -- there is no server-side command to inject into."
     },
     {
       "warning_type": "Command Injection",
       "warning_code": 14,
-      "fingerprint": "7730caf3719bd7df2d4a13eb686e1b919fd8f10865bbee094878d9057db6d7f5",
+      "fingerprint": "67e1a9479c762d6bc753134305da9f272f885eef403ca2265e1a3e8eb58b0ac2",
       "check_name": "Execute",
       "message": "Possible command injection",
-      "file": "app/hyperstack/components/alphabet_trace_app.rb",
+      "file": "app/hyperstack/components/trace_canvas.rb",
       "note": "False positive: app/hyperstack/components is Opal client-side source, compiled to JavaScript by Sprockets and run only in the browser. It is never loaded or executed as server-side Ruby, so %x{} here is Opal's raw-JavaScript-embedding syntax, not Ruby's Kernel#` shell-execution operator -- there is no server-side command to inject into."
     },
     {
       "warning_type": "Command Injection",
       "warning_code": 14,
-      "fingerprint": "849451022ae637a3cb5e68d944df06da6bc59722000e1b12c048e890cd7b3f7e",
+      "fingerprint": "8c2040542ce89a7a517f7304a279d370b12220a90817d3d530bd8a4712a9a5a1",
       "check_name": "Execute",
       "message": "Possible command injection",
-      "file": "app/hyperstack/components/alphabet_trace_app.rb",
+      "file": "app/hyperstack/components/trace_canvas.rb",
       "note": "False positive: app/hyperstack/components is Opal client-side source, compiled to JavaScript by Sprockets and run only in the browser. It is never loaded or executed as server-side Ruby, so %x{} here is Opal's raw-JavaScript-embedding syntax, not Ruby's Kernel#` shell-execution operator -- there is no server-side command to inject into."
     },
     {
@@ -46,6 +46,6 @@
       "note": "Accepted, not a bug: this app intentionally pins Ruby 3.1.0, which the princejoseph/hyperstack fork's Rails-7-compatibility work targets. Upgrading is tracked at the fork level, not per-app."
     }
   ],
-  "updated": "2026-08-14 05:30:00 -0700",
+  "updated": "2026-08-14 13:05:00 -0700",
   "brakeman_version": "7.1.1"
 }

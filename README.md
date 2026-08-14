@@ -68,7 +68,9 @@ app/
   hyperstack/
     components/
       hyper_component.rb          # base class for all Hyperstack components
-      alphabet_trace_app.rb       # reference letter, trace guide, canvas, nav
+      alphabet_trace_app.rb       # page layout: reference letter, guide, nav
+      trace_canvas.rb             # the drawing surface -- letter-agnostic
+      letter_picture.rb           # "A is for Apple" word/emoji card
   views/
     alphabet/
       show.html.erb               # mounts AlphabetTraceApp via react_component
