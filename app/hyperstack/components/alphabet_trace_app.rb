@@ -17,6 +17,8 @@ class AlphabetTraceApp < HyperComponent
     DIV(class: "app") do
       DIV(class: "letter-heading") { "#{letter.upcase}#{letter}" }
 
+      LetterPicture(letter: letter)
+
       DIV(class: "panes") do
         DIV(class: "pane reference-pane") do
           letter_svg(fill: "#3b6fd6")

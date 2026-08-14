@@ -43,6 +43,28 @@ body {
   margin-bottom: 1rem;
 }
 
+.letter-picture {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #fff;
+  border-radius: 999px;
+  padding: 0.5rem 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.letter-picture-emoji {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.letter-picture-word {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #444;
+}
+
 .panes {
   display: flex;
   gap: 1.5rem;

@@ -24,12 +24,13 @@ RSpec.describe "Tracing a letter", js: true do
       .perform
   end
 
-  it "shows the reference letter and a blank trace canvas" do
+  it "shows the reference letter, word/picture card, and a blank trace canvas" do
     visit "/a"
 
     expect(page).to have_css(".reference-pane svg")
     expect(page).to have_css(".trace-pane svg")
     expect(page).to have_css(".trace-canvas")
+    expect(page).to have_content("A is for Apple")
     expect(pixel_count).to eq(0)
   end
 
