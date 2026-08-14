@@ -57,6 +57,13 @@ end
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
+
+  # Mounts a single Hyperstack component in isolation for unit-level specs,
+  # separate from the full-page system specs. Fork branch for Rails 7/Ruby 3
+  # fixes (chromedriver-helper removed, webdrivers removed, timecop patch).
+  # require: false -- Bundler.require loads it before RSpec exists otherwise,
+  # raising "uninitialized constant RSpec::Expectations::PositiveExpectationHandler".
+  gem "hyper-spec", github: "princejoseph/hyperstack", branch: "rails-7-compatibility", glob: "ruby/hyper-spec/*.gemspec", require: false
 end
 
 group :development do

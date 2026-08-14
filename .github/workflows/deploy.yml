@@ -20,6 +20,11 @@ jobs:
 
       - name: Run specs
         run: bundle exec rspec
+        env:
+          # hyper-spec's component specs (spec/components) pick their Chrome
+          # driver off this var; "github" selects the flags GitHub Actions
+          # runners need (--no-sandbox, --disable-dev-shm-usage).
+          DRIVER: github
 
   deploy:
     name: Deploy to Fly.io

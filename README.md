@@ -42,6 +42,23 @@ Visit http://localhost:3000 — it redirects to `/a`.
 First request per boot is slow (~10s) while Opal compiles the component;
 subsequent requests are served from cache.
 
+## Testing
+
+```bash
+bundle exec rspec
+```
+
+- `spec/requests` — routing/controller behavior (valid/invalid letters, redirects)
+- `spec/system` — full-page browser specs (headless Chrome) covering the
+  assembled page: drawing, Clear, navigation
+- `spec/components` — unit-level specs for one Hyperstack component at a
+  time, via [hyper-spec](https://github.com/hyperstack-org/hyper-spec)'s
+  `mount("ComponentName", prop: value)`, independent of any route/controller.
+  **Add one of these for each new component** as the page grows — mount it,
+  assert on it, done; no need to wire it into the real page first.
+
+Deploys are gated on this suite passing (see `.github/workflows/deploy.yml`).
+
 ## Project structure
 
 ```
