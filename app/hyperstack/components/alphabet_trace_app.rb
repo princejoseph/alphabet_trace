@@ -5,6 +5,7 @@ class AlphabetTraceApp < HyperComponent
 
   before_mount do
     @score = nil
+    @revealed = false
 
     nav = Native(`navigator`)
     nav.serviceWorker.register("/service-worker.js") if nav[:serviceWorker]
@@ -29,13 +30,20 @@ class AlphabetTraceApp < HyperComponent
           letter_svg(fill: "none", stroke: "#c7c7cf", stroke_width: 3,
                      stroke_dasharray: "1 15", stroke_linecap: "round")
           TraceCanvas(letter: letter, ref: ->(instance) { @trace_canvas = instance })
-          DIV(class: "reveal-overlay#{' revealed' if @score}") { letter_svg(fill: "#3b6fd6") }
+          DIV(class: "reveal-overlay#{' revealed' if @revealed}") { letter_svg(fill: "#3b6fd6") }
         end
       end
 
       DIV(class: "controls") do
-        BUTTON(class: "btn-clear") { "Clear" }.on(:click) { mutate @score = nil; @trace_canvas.clear_canvas }
-        BUTTON(class: "btn-check") { "Check my tracing" }.on(:click) { mutate @score = @trace_canvas.check_tracing }
+        BUTTON(class: "btn-clear") { "Clear" }.on(:click) do
+          mutate @score = nil, @revealed = false
+          @trace_canvas.clear_canvas
+        end
+
+        BUTTON(class: "btn-check") { "Check my tracing" }.on(:click) do
+          mutate @score = @trace_canvas.check_tracing, @revealed = true
+          after(2.2) { mutate @revealed = false }
+        end
       end
 
       DIV(class: "score-result") { score_message(@score) } if @score
