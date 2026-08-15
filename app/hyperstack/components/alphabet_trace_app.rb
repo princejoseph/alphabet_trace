@@ -29,6 +29,7 @@ class AlphabetTraceApp < HyperComponent
           letter_svg(fill: "none", stroke: "#c7c7cf", stroke_width: 3,
                      stroke_dasharray: "1 15", stroke_linecap: "round")
           TraceCanvas(letter: letter, ref: ->(instance) { @trace_canvas = instance })
+          DIV(class: "reveal-overlay#{' revealed' if @score}") { letter_svg(fill: "#3b6fd6") }
         end
       end
 
