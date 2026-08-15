@@ -112,4 +112,17 @@ RSpec.describe "AlphabetTraceApp", js: true do
     click_button "Clear"
     expect(page).to have_no_css(".score-result")
   end
+
+  it "scores more strictly with Tight Check than the regular check" do
+    mount "AlphabetTraceApp", letter: "a"
+    trace_letter_a
+
+    click_button "Check my tracing"
+    regular_score = score_percentage
+
+    click_button "Tight Check"
+    tight_score = score_percentage
+
+    expect(tight_score).to be < regular_score
+  end
 end

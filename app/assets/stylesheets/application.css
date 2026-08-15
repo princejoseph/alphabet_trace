@@ -143,6 +143,9 @@ body {
 .btn-check { background: #3b6fd6; }
 .btn-check:hover { background: #2f5cc4; }
 
+.btn-check-tight { background: #7c4fd6; }
+.btn-check-tight:hover { background: #6a3fc4; }
+
 @keyframes score-fade-in {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }

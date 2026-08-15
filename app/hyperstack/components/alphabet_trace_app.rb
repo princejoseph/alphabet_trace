@@ -40,10 +40,8 @@ class AlphabetTraceApp < HyperComponent
           @trace_canvas.clear_canvas
         end
 
-        BUTTON(class: "btn-check") { "Check my tracing" }.on(:click) do
-          mutate @score = @trace_canvas.check_tracing, @revealed = true
-          after(2.2) { mutate @revealed = false }
-        end
+        BUTTON(class: "btn-check") { "Check my tracing" }.on(:click) { run_check }
+        BUTTON(class: "btn-check btn-check-tight") { "Tight Check" }.on(:click) { run_check(tolerance: 4) }
       end
 
       DIV(class: "score-result") { score_message(@score) } if @score
@@ -62,6 +60,11 @@ class AlphabetTraceApp < HyperComponent
            fill: fill, stroke: stroke, stroke_width: stroke_width,
            stroke_dasharray: stroke_dasharray, stroke_linecap: stroke_linecap) { letter.upcase }
     end
+  end
+
+  def run_check(tolerance: 14)
+    mutate @score = @trace_canvas.check_tracing(tolerance: tolerance), @revealed = true
+    after(2.2) { mutate @revealed = false }
   end
 
   def score_message(score)

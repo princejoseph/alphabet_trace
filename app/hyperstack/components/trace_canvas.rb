@@ -33,13 +33,17 @@ class TraceCanvas < HyperComponent
   # kids aren't graded on pixel-perfect accuracy:
   #  - coverage: how much of the letter's outline got traced over
   #  - precision: how much of the drawn ink stayed close to the outline
-  # Returns a 0-100 score (average of the two), or 0 if nothing was drawn.
-  def check_tracing
+  # `tolerance` is the blur radius in pixels -- smaller means stricter
+  # grading. Returns a 0-100 score (average of the two), or 0 if nothing
+  # was drawn.
+  def check_tracing(tolerance: 14)
     node = @canvas_node
     target_letter = letter.upcase
+    tol = tolerance
     %x{
       var canvasNode = #{node};
       var targetLetter = #{target_letter};
+      var tolerancePx = #{tol};
       var w = canvasNode.width, h = canvasNode.height;
 
       function renderOutline(blurPx) {
@@ -66,9 +70,9 @@ class TraceCanvas < HyperComponent
       }
 
       var letterMask = renderOutline(0);
-      var letterTolerance = renderOutline(14);
+      var letterTolerance = renderOutline(tolerancePx);
       var inkMask = renderInk(0);
-      var inkTolerance = renderInk(14);
+      var inkTolerance = renderInk(tolerancePx);
 
       var letterCount = 0, coveredCount = 0;
       var inkCount = 0, precisionCount = 0;

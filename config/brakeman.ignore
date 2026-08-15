@@ -30,7 +30,7 @@
     {
       "warning_type": "Command Injection",
       "warning_code": 14,
-      "fingerprint": "da6583a81d9773db8367c52a4799f07ab7d8a47a0b6a958a1b53031c92b057d0",
+      "fingerprint": "7571addb6b9e6ded4f591bdd8410d2fdab0c2ffbe8d942607d060e76a70bd32d",
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "app/hyperstack/components/trace_canvas.rb",
