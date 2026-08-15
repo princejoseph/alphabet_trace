@@ -6,6 +6,7 @@ class AlphabetTraceApp < HyperComponent
   before_mount do
     @score = nil
     @revealed = false
+    @erasing = false
 
     nav = Native(`navigator`)
     nav.serviceWorker.register("/service-worker.js") if nav[:serviceWorker]
@@ -36,8 +37,15 @@ class AlphabetTraceApp < HyperComponent
 
       DIV(class: "controls") do
         BUTTON(class: "btn-clear") { "Clear" }.on(:click) do
-          mutate @score = nil, @revealed = false
+          mutate @score = nil, @revealed = false, @erasing = false
           @trace_canvas.clear_canvas
+          @trace_canvas.set_erasing(false)
+        end
+
+        BUTTON(class: "btn-erase#{' active' if @erasing}") { @erasing ? "Erasing" : "Eraser" }.on(:click) do
+          erasing = !@erasing
+          mutate @erasing = erasing
+          @trace_canvas.set_erasing(erasing)
         end
 
         BUTTON(class: "btn-check") { "Check my tracing" }.on(:click) { run_check }

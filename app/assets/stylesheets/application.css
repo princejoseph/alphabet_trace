@@ -126,15 +126,18 @@ body {
   justify-content: center;
 }
 
-.btn-clear, .btn-check {
+.btn-clear, .btn-check, .btn-erase {
   font-family: 'Baloo 2', sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  color: #fff;
-  border: none;
   border-radius: 24px;
   padding: 0.6rem 1.75rem;
   cursor: pointer;
+}
+
+.btn-clear, .btn-check {
+  color: #fff;
+  border: none;
 }
 
 .btn-clear { background: #e8601c; }
@@ -145,6 +148,20 @@ body {
 
 .btn-check-tight { background: #7c4fd6; }
 .btn-check-tight:hover { background: #6a3fc4; }
+
+.btn-erase {
+  color: #3b6fd6;
+  background: #fff;
+  border: 2px solid #3b6fd6;
+  padding: calc(0.6rem - 2px) calc(1.75rem - 2px);
+}
+
+.btn-erase:hover { background: #eef3ff; }
+
+.btn-erase.active {
+  background: #3b6fd6;
+  color: #fff;
+}
 
 @keyframes score-fade-in {
   from { opacity: 0; transform: translateY(6px); }

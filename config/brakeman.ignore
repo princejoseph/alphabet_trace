@@ -37,6 +37,15 @@
       "note": "False positive: app/hyperstack/components is Opal client-side source, compiled to JavaScript by Sprockets and run only in the browser. It is never loaded or executed as server-side Ruby, so %x{} here is Opal's raw-JavaScript-embedding syntax, not Ruby's Kernel#` shell-execution operator -- there is no server-side command to inject into."
     },
     {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "38b453cfb7495bc2c3653e7b1c3706f6a0a2ae8aff7f2042f94d5b887a05b58b",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/hyperstack/components/trace_canvas.rb",
+      "note": "False positive: app/hyperstack/components is Opal client-side source, compiled to JavaScript by Sprockets and run only in the browser. It is never loaded or executed as server-side Ruby, so %x{} here is Opal's raw-JavaScript-embedding syntax, not Ruby's Kernel#` shell-execution operator -- there is no server-side command to inject into."
+    },
+    {
       "warning_type": "Unmaintained Dependency",
       "warning_code": 121,
       "fingerprint": "d84924377155b41e094acae7404ec2e521629d86f97b0ff628e3d1b263f8101c",

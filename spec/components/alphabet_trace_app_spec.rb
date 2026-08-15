@@ -125,4 +125,24 @@ RSpec.describe "AlphabetTraceApp", js: true do
 
     expect(tight_score).to be < regular_score
   end
+
+  it "erases part of a drawing, then draws normally again after switching back" do
+    mount "AlphabetTraceApp", letter: "a"
+
+    drag_across_canvas
+    drawn_count = pixel_count
+    expect(drawn_count).to be > 0
+
+    click_button "Eraser"
+    expect(page).to have_button("Erasing")
+
+    drag_across_canvas
+    expect(pixel_count).to be < drawn_count
+
+    click_button "Erasing"
+    expect(page).to have_button("Eraser")
+
+    drag_across_canvas
+    expect(pixel_count).to be > 0
+  end
 end

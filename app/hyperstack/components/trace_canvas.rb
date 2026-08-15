@@ -5,6 +5,7 @@ class TraceCanvas < HyperComponent
     @drawing = false
     @last_point = nil
     @canvas_node = nil
+    @erasing = false
   end
 
   render do
@@ -25,6 +26,16 @@ class TraceCanvas < HyperComponent
       var ctx = #{node}.getContext('2d');
       ctx.clearRect(0, 0, #{node}.width, #{node}.height);
     }
+  end
+
+  # Switches between drawing and erasing. Not `mutate`d -- like @drawing and
+  # @last_point, it's only ever read inside other event-handler methods
+  # (draw_line), never inside render's own output, so nothing needs to
+  # re-render when it changes. Takes an explicit value rather than toggling
+  # so callers (e.g. resetting to pen mode on Clear) can't accidentally
+  # flip it the wrong way.
+  def set_erasing(value)
+    @erasing = value
   end
 
   # Renders the target letter's outline onto an offscreen canvas (same font/
@@ -147,9 +158,14 @@ class TraceCanvas < HyperComponent
     from_y = from[1]
     to_x = to[0]
     to_y = to[1]
+    erasing = @erasing
+    line_width = @erasing ? 28 : 14
     %x{
       var ctx = #{node}.getContext('2d');
-      ctx.lineWidth = 14;
+      // destination-out erases whatever ink is under the stroke instead of
+      // painting over it -- the stroke's own color doesn't matter here.
+      ctx.globalCompositeOperation = #{erasing} ? 'destination-out' : 'source-over';
+      ctx.lineWidth = #{line_width};
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       ctx.strokeStyle = '#e8601c';
