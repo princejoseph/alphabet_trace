@@ -9,7 +9,7 @@ class TraceCanvas < HyperComponent
   end
 
   render do
-    CANVAS(width: 300, height: 340, class: "trace-canvas",
+    CANVAS(width: 300, height: 340, class: "trace-canvas #{@erasing ? 'eraser-cursor' : 'pen-cursor'}",
            ref: ->(node) { @canvas_node = node })
       .on(:mouse_down) { |e| start_stroke(e) }
       .on(:mouse_move) { |e| continue_stroke(e) }
@@ -28,14 +28,13 @@ class TraceCanvas < HyperComponent
     }
   end
 
-  # Switches between drawing and erasing. Not `mutate`d -- like @drawing and
-  # @last_point, it's only ever read inside other event-handler methods
-  # (draw_line), never inside render's own output, so nothing needs to
-  # re-render when it changes. Takes an explicit value rather than toggling
-  # so callers (e.g. resetting to pen mode on Clear) can't accidentally
-  # flip it the wrong way.
+  # Switches between drawing and erasing. Unlike @drawing/@last_point, this
+  # DOES need `mutate` -- it's read in render's own output now (to pick the
+  # cursor), not just inside other event-handler methods. Takes an explicit
+  # value rather than toggling so callers (e.g. resetting to pen mode on
+  # Clear) can't accidentally flip it the wrong way.
   def set_erasing(value)
-    @erasing = value
+    mutate @erasing = value
   end
 
   # Renders the target letter's outline onto an offscreen canvas (same font/

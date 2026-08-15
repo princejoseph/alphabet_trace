@@ -101,6 +101,17 @@ body {
   cursor: crosshair;
 }
 
+/* Custom cursors sized to match the actual brush -- mouse/trackpad only:
+   the `cursor` property has no effect on touch input, so mobile relies
+   entirely on the Eraser/Erasing button state for mode feedback instead. */
+.trace-canvas.pen-cursor {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><circle cx='8' cy='8' r='6' fill='rgba(232,96,28,0.35)' stroke='%23e8601c' stroke-width='1.5'/></svg>") 8 8, crosshair;
+}
+
+.trace-canvas.eraser-cursor {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='15' cy='15' r='13' fill='rgba(59,111,214,0.25)' stroke='%233b6fd6' stroke-width='2'/></svg>") 15 15, cell;
+}
+
 .reveal-overlay {
   position: absolute;
   top: 0;
