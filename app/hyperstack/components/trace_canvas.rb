@@ -1,3 +1,4 @@
+# backtick_javascript: true
 class TraceCanvas < HyperComponent
   param :letter
 

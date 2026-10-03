@@ -1,3 +1,4 @@
+# backtick_javascript: true
 class AlphabetTraceApp < HyperComponent
   param :letter
 

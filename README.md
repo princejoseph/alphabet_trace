@@ -38,7 +38,7 @@ automatic deployment on top.
 
 ## Stack
 
-- Ruby 3.1, Rails 7.2
+- Ruby 3.4, Rails 8.0
 - [Hyperstack](https://hyperstack.org) — the whole UI (`AlphabetTraceApp`) is
   one Ruby component, compiled to JavaScript via Opal, with no ActionCable
   (`Hyperstack.transport = :none`) since there's nothing to sync — it's a
@@ -48,8 +48,9 @@ automatic deployment on top.
   cheap here and naturally reset the canvas for each new letter
 - SQLite (unused beyond the Rails default — there are no models)
 - Gems pull from the [`princejoseph/hyperstack`](https://github.com/princejoseph/hyperstack)
-  fork's `rails-7-compatibility` branch, which backports Rails 7 / Ruby 3
-  fixes ahead of upstream
+  fork's `rails-8-compatibility` branch, which carries Rails 8 / Ruby 3.4
+  fixes ahead of upstream (Opal is compiled through `opal-sprockets`, not
+  `opal-rails`)
 
 ## Getting started
 
